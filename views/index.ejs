@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Short-URL</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+        }
+
+        body {
+            background: linear-gradient(24deg, rgba(2, 254, 217, 1) 0%, rgba(13, 248, 230, 1) 14%, rgba(18, 225, 245, 1) 22%, rgba(23, 127, 242, 1) 47%, rgba(26, 108, 236, 0.9668242296918768) 100%);
+        }
+
+        .container {
+            width: 100%;
+            height: 95vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box {
+            background-color: rgb(255, 255, 255, 0.82);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+        }
+
+        th,
+        td {
+            padding: 0.2rem;
+        }
+
+        button {
+            display: inline-block;
+            outline: none;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 1.5;
+            border-radius: 4px;
+            transition-property: background-color, border-color, color, box-shadow, filter;
+            transition-duration: .3s;
+            border: 1px solid transparent;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: normal;
+            text-align: center;
+            padding: 6px 12px;
+            color: #fff;
+            background-color: #15883e;
+
+        }
+
+        button :hover {
+            background-color: #1db954;
+        }
+
+        input {
+            padding: 6px 12px;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            appearance: none;
+            border-radius: 4px;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+
+        input :focus {
+            color: #212529;
+            background-color: #fff;
+            border-color: #86b7fe;
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+        }
+
+        #input-box {
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box nav">
+        <h1>Short Url</h1>
+    </div>
+    <div class="container">
+        <div class="box">
+            <div id="input-box">
+                <form action="/api/url" method="POST">
+                    <!-- <label for="">Enter URL: </label> -->
+                    <input type="text" name="redirectUrl" id="" placeholder="https://example.com">
+                    <button type="submit">Generate</button>
+                </form>
+            </div>
+
+            <div class="generated-urls">
+                <% if (locals.urls.length > 0) { %>
+                <table>
+                    <thead>
+                        <th>S.no.</th>
+                        <th>Short-Url</th>
+                        <th>URL</th>
+                        <th>Clicks</th>
+                    </thead>
+                    <tbody>
+                        <% urls.forEach((url, index) => { %>
+                        <% const newStr = url.redirectUrl.replace('https://', '') %>
+                        <tr>
+                            <td><%= index + 1 %> </td>
+                            <td><%= url.shortId %> </td>
+                            <td><%= newStr %> </td>
+                            <td><%= url.visitHistory.length %></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
